@@ -1,0 +1,13 @@
+- name: Install Kibana.
+  hosts: Kibana_Server
+  tasks:
+    - name: Copy Kibana file.
+      copy:
+        src: /opt/files/kibana.rpm
+        dest: /opt
+    - name: Install Kibana.
+      command: yum install -y /opt/kibana.rpm
+    - name: Place kibana.yml.
+      template:
+        src: /opt/elkstack_role/templates/kibana.yml.j2
+        dest: "{{ kibana_yml_path }}"

@@ -1,0 +1,15 @@
+---
+elasticsearch_yml_path: /etc/elasticsearch/elasticsearch.yml
+kibana_yml_path: /etc/kibana/kibana.yml
+logstash_yml_path: /etc/logstash/logstash.yml
+filebeat_yml_path: /etc/filebeat/filebeat.yml
+logstash_conf_path: /etc/logstash/conf.d/logstash.conf
+logstash_service_path: /etc/systemd/system/logstash.service
+logstash_jvm_path: /etc/logstash/jvm.options
+
+ip_elastic_master: 10.00.00.00
+ip_elastic_slave1: 10.00.00.00
+ip_elastic_slave2: 10.00.00.00
+ip_kibana: 10.00.00.00
+ip_logstash: 10.00.00.00
+ip_filebeat: 10.00.00.00

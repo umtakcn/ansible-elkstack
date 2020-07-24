@@ -1,0 +1,39 @@
+- name: Start services of Elasticsearch, Kibana, Logstash and Filebeat.
+  hosts: all
+  tasks:
+    - name: Start Elasticsearch Master service.
+      service:
+        name: elasticsearch
+        state: started
+        enabled: yes
+      when: ansible_host == '{{ ip_elastic_master }}'
+    - name: Start Elasticsearch Slave1 service.
+      service:
+        name: elasticsearch
+        state: started
+        enabled: yes
+      when: ansible_host == '{{ ip_elastic_slave1 }}'
+    - name: Start Elasticsearch Slave2 service.
+      service:
+        name: elasticsearch
+        state: started
+        enabled: yes
+      when: ansible_host == '{{ ip_elastic_slave2 }}'
+    - name: Start Kibana service.
+      service:
+        name: kibana
+        state: started
+        enabled: yes
+      when: ansible_host == '{{ ip_kibana }}'
+    - name: Start Logstash service.
+      service:
+        name: logstash
+        state: started
+        enabled: yes
+      when: ansible_host == '{{ ip_logstash }}'
+    - name: Start Filebeat service.
+      service:
+        name: filebeat
+        state: started
+        enabled: yes
+      when: ansible_host == '{{ ip_filebeat }}'

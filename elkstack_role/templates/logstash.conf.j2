@@ -1,0 +1,52 @@
+input
+{
+    beats
+    {
+     port => 5044
+    }
+}
+filter
+{
+  if [message] =~ "^#"
+    {
+     drop {}
+    }
+
+    grok
+    {
+     match => { "message" => "%{TIMESTAMP_ISO8601:timestamp} %{IPORHOST:server_name} %{URIPROTO:method} %{NOTSPACE:uri_stem} (?:-|%{NOTSPACE:uri-query}) %{NUMBER:server_port} (?:-|%{NOTSPACE:username}) %{IPORHOST:client_ip} (?:-|%{NOTSPACE:useragent}) (?:-|%{NOTSPACE:referrer}) %{NUMBER:protocol_status} %{NUMBER:protocol_substatus} %{NUMBER:win32_status} %{NUMBER:bytes_sent} %{NUMBER:bytes_received} %{NUMBER:time_taken} (?:-|%{NOTSPACE:x_ip}) (?:-|%{NOTSPACE:x_port})" }
+    }
+    date
+    {
+      match => [ "timestamp" , "yyyy-MM-dd HH:mm:ss" ]
+      timezone => "Europe/Istanbul"
+      target => "@timestamp"
+    }
+
+
+    mutate
+    {
+     remove_field => [ "timestamp"]
+     convert => {
+         "protocol_status" => "integer"
+         "protocol_substatus" => "integer"
+         "win32_status" => "integer"
+         "server_port" => "integer"
+         "x_port" => "integer"
+         "timetaken" => "float"
+     }
+    }
+    useragent
+    {
+     source=> "useragent"
+     prefix=> "browser-"
+    }
+}
+output
+{
+    elasticsearch
+    {
+     hosts => ["{{ elastic_master_host2 }}"]
+     index => "%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}"
+    }
+}

@@ -1,0 +1,26 @@
+- name: Install Elasticsearch.
+  hosts: Elasticsearch_Servers
+  tasks:
+    - name: Copy Elasticsearch file.
+      copy:
+        src: /opt/files/elasticsearch.rpm
+        dest: /opt
+    - name: Install Elasticsearch.
+      command: yum install -y /opt/elasticsearch.rpm
+    - name: Restart Elasticsearch service. 
+      service:
+        name: elasticsearch
+        state: started
+        enabled: yes
+    - name: Stop Elasticsearch service.
+      service:
+        name: elasticsearch
+        state: stopped
+    - name: Delete necessary files.
+      file:
+        path: /var/lib/elasticsearch/nodes
+        state: absent
+    - name: Place Elasticsearch.yml.
+      template:
+       src: /opt/elkstack_role/templates/elasticsearch.yml.j2
+       dest: "{{ elasticsearch_yml_path }}"

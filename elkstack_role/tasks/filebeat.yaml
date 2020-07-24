@@ -1,0 +1,13 @@
+- name: Install Filebeat.
+  hosts: Filebeat_Server
+  tasks:
+    - name: Copy Filebeat file.
+      copy:
+        src: /opt/files/filebeat.rpm
+        dest: /opt
+    - name: Install Filebeat.
+      command: yum install -y /opt/filebeat.rpm
+    - name: Place Filebeat.yml.
+      template:
+        src: /opt/elkstack_role/templates/filebeat.yml.j2
+        dest: "{{ filebeat_yml_path }}"

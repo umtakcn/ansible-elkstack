@@ -1,0 +1,12 @@
+---
+cluster_name: noldor
+bootstrap: false
+port: 9200
+elastic_host1: "10.00.000.00"
+elastic_host2: "10.00.000.00"
+elastic_host3: "10.00.000.00"
+cluster_initial_master_nodes: noldor1
+gateway_recover_after_nodes: 1
+gateway_expected_nodes: 3
+gateway_recover_after_time: 5m
+discovery_zen_minimum_master_nodes: 2

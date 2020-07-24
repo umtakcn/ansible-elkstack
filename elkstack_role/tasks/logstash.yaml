@@ -1,0 +1,30 @@
+- name: Install Logstash.
+  hosts: Logstash_Server
+  tasks:
+    - name: Install Logstash and Java files.
+      copy:
+        src: "{{ item }}"
+        dest: /opt
+      with_items:
+        - /opt/files/logstash.rpm
+        - /opt/files/jdk.rpm
+    - name: Install Logstash.
+      command: yum install -y /opt/logstash.rpm
+    - name: Install Java.
+      command: yum install -y /opt/jdk.rpm
+    - name: Place logstash.yml.
+      template:
+        src: /opt/elkstack_role/templates/logstash.yml.j2
+        dest: "{{ logstash_yml_path }}"
+    - name: Place logstash.conf.
+      template:
+        src: /opt/elkstack_role/templates/logstash.conf.j2
+        dest: "{{ logstash_conf_path }}"
+    - name: Place logstash.service.
+      template:
+        src: /opt/elkstack_role/templates/logstash.service.j2
+        dest: "{{ logstash_service_path }}"
+    - name: Place jvm.options.
+      template:
+        src: /opt/elkstack_role/templates/jvm.options.j2
+        dest: "{{ logstash_jvm_path }}"

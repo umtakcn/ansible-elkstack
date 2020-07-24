@@ -1,0 +1,13 @@
+- name: Install Elkstack.
+  hosts: all
+  tasks:
+   - name: Import variables.
+     include_vars:
+      dir: vars
+      extensions:
+       - yaml
+- import_playbook: tasks/elasticsearch.yaml
+- import_playbook: tasks/kibana.yaml
+- import_playbook: tasks/logstash.yaml
+- import_playbook: tasks/filebeat.yaml
+- import_playbook: tasks/services.yaml

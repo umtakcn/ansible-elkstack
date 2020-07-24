@@ -1,0 +1,41 @@
+Elastic_Master ansible_host=10.00.00.00 ansible_ssh_pass=
+Elastic_Slave1 ansible_host=10.00.00.00 ansible_ssh_pass=
+Elastic_Slave2 ansible_host=10.00.00.00 ansible_ssh_pass=
+Kibana         ansible_host=10.00.00.00 ansible_ssh_pass=
+Logstash       ansible_host=10.00.00.00 ansible_ssh_pass=
+Filebeat       ansible_host=10.00.00.00 ansible_ssh_pass=
+
+[Elasticsearch_Servers]
+Elastic_Master
+Elastic_Slave1
+Elastic_Slave2
+
+[Elasticsearch_Master]
+Elastic_Master
+
+[Elasticsearch_Master:vars]
+node_name=noldor1
+network_host={{ ip_elastic_master }}
+
+[Elasticsearch_Slave1]
+Elastic_Slave1
+
+[Elasticsearch_Slave1:vars]
+node_name=noldor2
+network_host={{ ip_elastic_slave1 }}
+
+[Elasticsearch_Slave2]
+Elastic_Slave2
+
+[Elasticsearch_Slave2:vars]
+node_name=noldor3
+network_host={{ ip_elastic_slave1 }}
+
+[Kibana_Server]
+Kibana
+
+[Logstash_Server]
+Logstash
+
+[Filebeat_Server]
+Filebeat
